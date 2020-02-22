@@ -20,11 +20,12 @@ var token = "[YOUR APP TOKEN]";
 var manager = new EaseTrello.TrelloManager(appKey, token);
 ```
 
-Invoke ImportToTrello method with path to your xlsx file
+Use XlsxCardRowLoader to load data from your xlsx file for import.</br>
+Invoke ImportToTrello method with XlsxCardRowLoader and board name. 
 ```csharp
-await manager.ImportToTrello(@"C:\New board.xlsx");
+var cardRowProvider = new XlsxCardRowLoader(@"C:\New board.xlsx");
+
+await manager.ImportToTrello(cardRowProvider, "Board name");
 ```
 
 Thats all! Invoke of ImportToTrello creates new board with, list, labels and cards with checklist.
-
-
