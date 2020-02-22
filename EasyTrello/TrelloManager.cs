@@ -1,6 +1,5 @@
 ﻿namespace EaseTrello
 {
-    using System.IO;
     using Unity;
     using Unity.Injection;
     using Client;
@@ -22,14 +21,12 @@
             this.InitUnityContainer(apiKey, token);
         }
 
-        public async Task ImportToTrello(string filePath)
+        public async Task ImportToTrello(ICardRowProvider cardRowProvider, string boardName)
         {
-            var boardLoader = _container.Resolve<IBoardLoader>();
             var importer = _container.Resolve<IImporter>();
 
-            var boardName = Path.GetFileNameWithoutExtension(filePath);
-            var source = boardLoader.Load(filePath);
             var destination = new Board(boardName);
+            var source = cardRowProvider.GetCardRows();
 
             await importer.Import(source, destination);
         }
@@ -49,9 +46,6 @@
             _container.RegisterType<ITokensService, TokensService>();
             _container.RegisterType<IChecklistsService, ChecklistsService>();
             _container.RegisterType<IMemberService, MemberService>();
-
-            // File loader injection
-            _container.RegisterType<IBoardLoader, BoardLoader>(); // TODO: try "Adapter" or "Mediator"
 
             // "Chain of responsibility" injection
             _container.RegisterType<IImporter, BoardImport>();

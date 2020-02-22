@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Models;
 
-    internal interface IBoardLoader
+    public interface ICardRowProvider
     {
-        IEnumerable<CardRow> Load(string filePath);
+        IEnumerable<CardRow> GetCardRows();
     }
 }

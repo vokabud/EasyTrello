@@ -7,13 +7,20 @@
     using Interfaces;
     using Models;
 
-    internal class BoardLoader : IBoardLoader
+    internal class XlsxCardRowLoader : ICardRowProvider
     {
-        public IEnumerable<CardRow> Load(string filePath)
+        private readonly string _filePath;
+
+        public XlsxCardRowLoader(string filePath)
+        {
+            this._filePath = filePath;
+        }
+
+        public IEnumerable<CardRow> GetCardRows()
         {
             var result = new List<CardRow>();
 
-            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            using (var package = new ExcelPackage(new FileInfo(this._filePath)))
             {
                 var worksheet = package.Workbook.Worksheets[1];
                 var rowCount = worksheet.Dimension.Rows;
@@ -32,7 +39,7 @@
                         description: description,
                         items: checkList,
                         list: list);
-                        
+
                     result.Add(cardRow);
                 }
             }

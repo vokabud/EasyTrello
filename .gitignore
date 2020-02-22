@@ -33,3 +33,7 @@
 .vs/
 EasyTrello/bin/
 EasyTrello/obj/
+Tests/EaseTrello.IntegrationTests/bin/
+Tests/EaseTrello.IntegrationTests/obj/
+Tests/EaseTrello.UnitTests/bin/
+Tests/EaseTrello.UnitTests/obj/
